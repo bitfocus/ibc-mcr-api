@@ -1,0 +1,111 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl", "linux-arm64-openssl-1.1.x"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// Event model
+model Event {
+  id           String        @id @default(uuid())
+  title        String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  sources      Source[]
+  destinations Destination[]
+  partylines   Partyline[]   // New relation to partylines
+
+  @@map("events")
+}
+
+// Source model
+model Source {
+  id        String       @id @default(uuid())
+  label     String
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  event     Event        @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  eventId   String
+  ports     SourcePort[] // New relation to source ports
+
+  @@index([eventId])
+  @@map("sources")
+}
+
+// Destination model
+model Destination {
+  id        String            @id @default(uuid())
+  label     String
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  event     Event             @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  eventId   String
+  ports     DestinationPort[] // New relation to destination ports
+
+  @@index([eventId])
+  @@map("destinations")
+}
+
+// New model for communication partylines
+model Partyline {
+  id        String   @id @default(uuid())
+  title     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  eventId   String
+
+  @@index([eventId])
+  @@map("partylines")
+}
+
+// New model for source ports
+model SourcePort {
+  id          String      @id @default(uuid())
+  type        String      // e.g., "video", "audio"
+  channel     Int         // Channel number
+  description String?     // Optional description
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  source      Source      @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  sourceId    String
+  flowEdges   FlowEdge[]  // Relation to flow edges
+
+  @@index([sourceId])
+  @@map("source_ports")
+}
+
+// New model for destination ports
+model DestinationPort {
+  id          String      @id @default(uuid())
+  type        String      // e.g., "video", "audio"
+  channel     Int         // Channel number
+  description String?     // Optional description
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  destination Destination @relation(fields: [destinationId], references: [id], onDelete: Cascade)
+  destinationId String
+  flowEdges   FlowEdge[]  // Relation to flow edges
+
+  @@index([destinationId])
+  @@map("destination_ports")
+}
+
+// New model for flow edges (connections between source and destination ports)
+model FlowEdge {
+  id                String          @id @default(uuid())
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  sourcePort        SourcePort      @relation(fields: [sourcePortId], references: [id], onDelete: Cascade)
+  sourcePortId      String
+  destinationPort   DestinationPort @relation(fields: [destinationPortId], references: [id], onDelete: Cascade)
+  destinationPortId String
+
+  @@unique([sourcePortId, destinationPortId]) // Ensure unique connections
+  @@index([sourcePortId])
+  @@index([destinationPortId])
+  @@map("flow_edges")
+}

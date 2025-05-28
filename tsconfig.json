@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "baseUrl": "./src",
+    "allowJs": true,
+    "target": "es2018",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "outDir": "./dist"
+  },
+  "paths": {
+ },
+  "include": [
+    "./src/**/*.ts",
+    "./src/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
