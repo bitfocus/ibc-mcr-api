@@ -1,15 +1,22 @@
 {
   "name": "ibc",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx src/index.ts",
-    "prisma:seed": "tsx prisma/seed.ts"
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "prisma:seed": "tsx prisma/seed.ts",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate deploy",
+    "docker:build": "docker build -t ibc-api .",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down"
   },
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "IBC MCR Accelerator API for broadcast environments",
   "dependencies": {
     "@prisma/client": "^6.8.2",
     "express": "^5.1.0",
