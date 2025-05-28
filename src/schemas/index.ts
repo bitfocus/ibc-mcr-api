@@ -3,3 +3,7 @@ export * from './common';
 export * from './event';
 export * from './source';
 export * from './destination';
+export * from './partyline';
+export * from './source-port';
+export * from './destination-port';
+export * from './flow-edge';

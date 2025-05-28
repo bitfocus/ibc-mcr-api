@@ -48,12 +48,20 @@ export const getEventRoute: RouteConfig<
 
     try {
       // Try to find the event using Prisma
-
       const event = await prisma.event.findUnique({
         where: { id: eventId },
         include: {
-          sources: true,
-          destinations: true,
+          sources: {
+            include: {
+              ports: true
+            }
+          },
+          destinations: {
+            include: {
+              ports: true
+            }
+          },
+          partylines: true
         },
       });
 
@@ -67,6 +75,21 @@ export const getEventRoute: RouteConfig<
         return;
       }
 
+      // Fetch flow edges for this event
+      const flowEdges = await prisma.flowEdge.findMany({
+        where: {
+          sourcePort: {
+            source: {
+              eventId: eventId
+            }
+          }
+        },
+        include: {
+          sourcePort: true,
+          destinationPort: true
+        }
+      });
+
       // Format the response using the actual event data
       const responsePayload = {
         id: event.id,
@@ -76,11 +99,44 @@ export const getEventRoute: RouteConfig<
         sources: event.sources?.map(source => ({
           id: source.id,
           label: source.label,
+          ports: source.ports?.map(port => ({
+            id: port.id,
+            type: port.type,
+            channel: port.channel,
+            description: port.description
+          })) || []
         })) || [],
         destinations: event.destinations?.map(destination => ({
           id: destination.id,
           label: destination.label,
+          ports: destination.ports?.map(port => ({
+            id: port.id,
+            type: port.type,
+            channel: port.channel,
+            description: port.description
+          })) || []
         })) || [],
+        partylines: event.partylines?.map(partyline => ({
+          id: partyline.id,
+          title: partyline.title
+        })) || [],
+        flowEdges: flowEdges.map(edge => ({
+          id: edge.id,
+          sourcePortId: edge.sourcePortId,
+          destinationPortId: edge.destinationPortId,
+          sourcePort: {
+            id: edge.sourcePort.id,
+            type: edge.sourcePort.type,
+            channel: edge.sourcePort.channel,
+            description: edge.sourcePort.description
+          },
+          destinationPort: {
+            id: edge.destinationPort.id,
+            type: edge.destinationPort.type,
+            channel: edge.destinationPort.channel,
+            description: edge.destinationPort.description
+          }
+        }))
       };
 
       res.status(200).json(eventSuccessResponseSchema.parse(responsePayload));

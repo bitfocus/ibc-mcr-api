@@ -85,7 +85,7 @@ async function seedDatabaseIfEmpty() {
 		if (eventCount === 0) {
 			console.log('Database is empty. Seeding with initial data...');
 			
-			// Create a sample event
+			// Create a sample event with sources, destinations, partylines, ports, and flow edges
 			const event = await prisma.event.create({
 				data: {
 					title: 'Sample Event',
@@ -93,6 +93,25 @@ async function seedDatabaseIfEmpty() {
 						create: [
 							{
 								label: 'Main Camera',
+								ports: {
+									create: [
+										{
+											type: 'video',
+											channel: 1,
+											description: 'Main video feed'
+										},
+										{
+											type: 'audio',
+											channel: 1,
+											description: 'Left audio channel'
+										},
+										{
+											type: 'audio',
+											channel: 2,
+											description: 'Right audio channel'
+										}
+									]
+								}
 							}
 						]
 					},
@@ -100,19 +119,100 @@ async function seedDatabaseIfEmpty() {
 						create: [
 							{
 								label: 'Output Stream 1',
+								ports: {
+									create: [
+										{
+											type: 'video',
+											channel: 1,
+											description: 'Main video output'
+										},
+										{
+											type: 'audio',
+											channel: 1,
+											description: 'Left audio output'
+										},
+										{
+											type: 'audio',
+											channel: 2,
+											description: 'Right audio output'
+										}
+									]
+								}
+							}
+						]
+					},
+					partylines: {
+						create: [
+							{
+								title: 'Main Communication Channel'
 							}
 						]
 					}
 				},
 				include: {
-					sources: true,
-					destinations: true,
+					sources: {
+						include: {
+							ports: true
+						}
+					},
+					destinations: {
+						include: {
+							ports: true
+						}
+					},
+					partylines: true
 				}
 			});
+			
+			// Create flow edges between source and destination ports
+			if (event.sources[0]?.ports && event.destinations[0]?.ports) {
+				// Connect video ports
+				const videoSourcePort = event.sources[0].ports.find(p => p.type === 'video' && p.channel === 1);
+				const videoDestPort = event.destinations[0].ports.find(p => p.type === 'video' && p.channel === 1);
+				
+				if (videoSourcePort && videoDestPort) {
+					await prisma.flowEdge.create({
+						data: {
+							sourcePortId: videoSourcePort.id,
+							destinationPortId: videoDestPort.id
+						}
+					});
+					console.log(`Created flow edge: Video port ${videoSourcePort.id} -> ${videoDestPort.id}`);
+				}
+				
+				// Connect audio ports (channel 1)
+				const audioSourcePort1 = event.sources[0].ports.find(p => p.type === 'audio' && p.channel === 1);
+				const audioDestPort1 = event.destinations[0].ports.find(p => p.type === 'audio' && p.channel === 1);
+				
+				if (audioSourcePort1 && audioDestPort1) {
+					await prisma.flowEdge.create({
+						data: {
+							sourcePortId: audioSourcePort1.id,
+							destinationPortId: audioDestPort1.id
+						}
+					});
+					console.log(`Created flow edge: Audio port ${audioSourcePort1.id} -> ${audioDestPort1.id}`);
+				}
+				
+				// Connect audio ports (channel 2)
+				const audioSourcePort2 = event.sources[0].ports.find(p => p.type === 'audio' && p.channel === 2);
+				const audioDestPort2 = event.destinations[0].ports.find(p => p.type === 'audio' && p.channel === 2);
+				
+				if (audioSourcePort2 && audioDestPort2) {
+					await prisma.flowEdge.create({
+						data: {
+							sourcePortId: audioSourcePort2.id,
+							destinationPortId: audioDestPort2.id
+						}
+					});
+					console.log(`Created flow edge: Audio port ${audioSourcePort2.id} -> ${audioDestPort2.id}`);
+				}
+			}
 			
 			console.log(`Seeded database with event: ${event.id} - ${event.title}`);
 			console.log(`Created source: ${event.sources[0].id} - ${event.sources[0].label}`);
 			console.log(`Created destination: ${event.destinations[0].id} - ${event.destinations[0].label}`);
+			console.log(`Created partyline: ${event.partylines[0].id} - ${event.partylines[0].title}`);
 		} else {
 			console.log(`Database already contains ${eventCount} events. Skipping seeding.`);
 		}
