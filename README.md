@@ -15,12 +15,9 @@ This project provides an API for the IBC MCR (Master Control Room) Accelerator, 
 - [Development](#development)
   - [Running the Server](#running-the-server)
   - [Database Seeding](#database-seeding)
-- [API Endpoints](#api-endpoints)
 - [Schema Validation with Zod](#schema-validation-with-zod)
-- [OpenAPI Documentation](#openapi-documentation)
 - [Deployment](#deployment)
   - [Docker Deployment](#docker-deployment)
-  - [Cloud Deployment](#cloud-deployment)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -128,58 +125,19 @@ Or use the Prisma CLI:
 npx prisma db seed
 ```
 
-## API Endpoints
+## API Documentation
 
-The API provides the following main endpoints:
+The API provides endpoints for managing events, sources, destinations, ports, and flow connections. For detailed information about all available endpoints, request/response formats, and examples, please refer to the OpenAPI documentation available at:
 
-### Events
+```
+http://localhost:3000/docs
+```
 
-- `GET /api/v1/events`: List all events
-- `GET /api/v1/events/:eventId`: Get a specific event
-- `POST /api/v1/events`: Create a new event
-- `PUT /api/v1/events/:eventId`: Update an event
-- `PATCH /api/v1/events/:eventId`: Partially update an event
-- `DELETE /api/v1/events/:eventId`: Delete an event
-
-### Sources
-
-- `GET /api/v1/sources`: List all sources
-- `GET /api/v1/sources/:sourceId`: Get a specific source
-- `POST /api/v1/sources`: Create a new source
-- `PUT /api/v1/sources/:sourceId`: Update a source
-- `DELETE /api/v1/sources/:sourceId`: Delete a source
-
-### Destinations
-
-- `GET /api/v1/destinations`: List all destinations
-- `GET /api/v1/destinations/:destinationId`: Get a specific destination
-- `POST /api/v1/destinations`: Create a new destination
-- `PUT /api/v1/destinations/:destinationId`: Update a destination
-- `DELETE /api/v1/destinations/:destinationId`: Delete a destination
-
-### Partylines
-
-- `GET /api/v1/partylines`: List all partylines
-- `GET /api/v1/partylines/:partylineId`: Get a specific partyline
-- `POST /api/v1/partylines`: Create a new partyline
-- `PUT /api/v1/partylines/:partylineId`: Update a partyline
-- `DELETE /api/v1/partylines/:partylineId`: Delete a partyline
-
-### Source Ports
-
-- `GET /api/v1/source-ports`: List all source ports
-- `GET /api/v1/source-ports/:portId`: Get a specific source port
-- `POST /api/v1/source-ports`: Create a new source port
-- `PUT /api/v1/source-ports/:portId`: Update a source port
-- `DELETE /api/v1/source-ports/:portId`: Delete a source port
-
-### Destination Ports
-
-- `GET /api/v1/destination-ports`: List all destination ports
-- `GET /api/v1/destination-ports/:portId`: Get a specific destination port
-- `POST /api/v1/destination-ports`: Create a new destination port
-- `PUT /api/v1/destination-ports/:portId`: Update a destination port
-- `DELETE /api/v1/destination-ports/:portId`: Delete a destination port
+This interactive documentation allows you to:
+- Browse all available endpoints
+- See request parameters and body schemas
+- View response schemas and examples
+- Test API calls directly from the browser
 
 ## Schema Validation with Zod
 
@@ -222,39 +180,31 @@ The OpenAPI document includes:
 
 ### Docker Deployment
 
+The project includes Docker configuration for easy deployment:
+
 1. Build the Docker image:
 
 ```bash
-docker build -t ibc-api .
+npm run docker:build
 ```
 
-2. Run the container:
+2. Start the Docker containers (API and database):
 
 ```bash
-docker run -p 3000:3000 -e DATABASE_URL="mysql://username:password@host:3306/ibc_db" ibc-api
+npm run docker:up
 ```
 
-### Cloud Deployment
-
-#### AWS Deployment
-
-1. Build the application:
+3. Stop the Docker containers:
 
 ```bash
-npm run build
+npm run docker:down
 ```
 
-2. Deploy to AWS Elastic Beanstalk or AWS ECS.
-
-#### Azure Deployment
-
-1. Build the application:
-
-```bash
-npm run build
-```
-
-2. Deploy to Azure App Service or Azure Container Instances.
+The Docker setup includes:
+- API service running on port 3000
+- MySQL database with persistent storage
+- Automatic database migrations and seeding
+- Health checks to ensure services start in the correct order
 
 ## Contributing
 
@@ -266,4 +216,4 @@ npm run build
 
 ## License
 
-This project is licensed under the ISC License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.

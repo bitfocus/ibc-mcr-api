@@ -15,7 +15,7 @@
     "docker:down": "docker-compose down"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "description": "IBC MCR Accelerator API for broadcast environments",
   "dependencies": {
     "@prisma/client": "^6.8.2",
