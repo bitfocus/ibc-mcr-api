@@ -8,7 +8,7 @@ import {
   errorSchema,
   validateDestinationPatch,
 } from "../../schemas";
-import { prisma } from "utils/prisma";
+import { prisma } from "../../utils/prisma";
 
 // Define the PUT /destinations/:destinationId route
 export const putDestinationRoute: RouteConfig<

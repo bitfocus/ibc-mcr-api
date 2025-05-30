@@ -7,7 +7,7 @@ import {
   errorSchema,
   validateEventPatch,
 } from "../../schemas";
-import { prisma } from "utils/prisma";
+import { prisma } from "../../utils/prisma";
 
 // Define the PATCH /events/:eventId route
 export const patchEventRoute: RouteConfig<

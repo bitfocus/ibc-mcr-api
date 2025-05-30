@@ -5,7 +5,7 @@ import {
   notFoundSchema,
   errorSchema,
 } from "../../schemas";
-import { prisma } from "utils/prisma";
+import { prisma } from "../../utils/prisma";
 
 // Define the GET /source-ports/:sourcePortId route
 export const getSourcePortRoute: RouteConfig<

@@ -4,7 +4,7 @@ import {
   notFoundSchema,
   errorSchema,
 } from "../../schemas";
-import { prisma } from "utils/prisma";
+import { prisma } from "../../utils/prisma";
 
 // Define the DELETE /partylines/:partylineId route
 export const deletePartylineRoute: RouteConfig<

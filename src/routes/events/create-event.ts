@@ -4,7 +4,7 @@ import {
 	eventSuccessResponseSchema,
 	errorSchema,
 } from "../../schemas";
-import { prisma } from "utils/prisma";
+import { prisma } from "../../utils/prisma";
 
 // Define the POST /events route
 export const createEventRoute: RouteConfig<

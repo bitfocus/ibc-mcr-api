@@ -12,21 +12,18 @@ import { type z, type ZodSchema, ZodError, type AnyZodObject } from "zod";
 declare global {
 	namespace Express {
 		interface Request {
-			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-			validatedParams: any;
-			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-			validatedQuery: any;
-			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-			validatedBody: any;
+			validatedParams: Record<string, unknown>;
+			validatedQuery: Record<string, unknown>;
+			validatedBody: Record<string, unknown>;
 		}
 	}
 }
 
 // A more strongly-typed Request for use in our handlers
 export interface TypedValidatedRequest<P, Q, B> extends Request {
-	validatedParams: P; // P will be inferred from Zod schema for params
-	validatedQuery: Q; // Q will be inferred from Zod schema for query
-	validatedBody: B; // B will be inferred from Zod schema for body
+	validatedParams: P extends Record<string, unknown> ? P : Record<string, unknown>;
+	validatedQuery: Q extends Record<string, unknown> ? Q : Record<string, unknown>;
+	validatedBody: B extends Record<string, unknown> ? B : Record<string, unknown>;
 }
 
 // Schemas for the validation middleware
@@ -38,7 +35,7 @@ export interface ValidationSchemas {
 
 // General-purpose validation middleware factory
 export function validateRequest(schemas: ValidationSchemas): RequestHandler {
-	return (req: Request, res: Response, next: NextFunction) => {
+	return (req: Request, res: Response, next: NextFunction): void => {
 		try {
 			if (schemas.params) {
 				req.validatedParams = schemas.params.parse(req.params);
@@ -55,10 +52,11 @@ export function validateRequest(schemas: ValidationSchemas): RequestHandler {
 			next();
 		} catch (error) {
 			if (error instanceof ZodError) {
-				return res.status(400).json({
+				res.status(400).json({
 					message: "Validation failed",
 					errors: error.flatten().fieldErrors,
 				});
+				return;
 			}
 			// For other unexpected errors, pass to Express's default error handler
 			next(error);
@@ -99,7 +97,7 @@ export interface RouteConfig<
 				description: string;
 				content?: {
 					"application/json": {
-						schema: ZodSchema<any>; // Allows any Zod schema for response (object, array, primitive)
+						schema: ZodSchema<unknown>; // Allows any Zod schema for response (object, array, primitive)
 					};
 				};
 			};
@@ -126,10 +124,10 @@ export interface RouteConfig<
 
 // Function to create an Express Router and the OpenAPI paths object from route definitions
 export function createRouterAndApiPaths(
-	routeDefinitions: RouteConfig<any, any, any>[],
+	routeDefinitions: RouteConfig<AnyZodObject | undefined, AnyZodObject | undefined, AnyZodObject | undefined>[],
 ) {
 	const router = Router();
-	const openApiPaths: Record<string, any> = {};
+	const openApiPaths: Record<string, Record<string, unknown>> = {};
 
 	for (const route of routeDefinitions) {
 		const validationMiddleware = validateRequest({

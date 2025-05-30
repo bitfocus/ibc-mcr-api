@@ -8,7 +8,7 @@ import {
   errorSchema,
   validatePartylinePatch,
 } from "../../schemas";
-import { prisma } from "utils/prisma";
+import { prisma } from "../../utils/prisma";
 
 // Define the PUT /partylines/:partylineId route
 export const putPartylineRoute: RouteConfig<

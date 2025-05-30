@@ -8,7 +8,7 @@ import {
   errorSchema,
   validateSourcePatch,
 } from "../../schemas";
-import { prisma } from "utils/prisma";
+import { prisma } from "../../utils/prisma";
 
 // Define the PUT /sources/:sourceId route
 export const putSourceRoute: RouteConfig<

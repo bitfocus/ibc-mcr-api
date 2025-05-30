@@ -8,7 +8,7 @@ import {
   errorSchema,
   validateSourcePortPatch,
 } from "../../schemas";
-import { prisma } from "utils/prisma";
+import { prisma } from "../../utils/prisma";
 
 // Define the PUT /source-ports/:sourcePortId route
 export const putSourcePortRoute: RouteConfig<

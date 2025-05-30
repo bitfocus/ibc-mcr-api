@@ -6,7 +6,7 @@ import {
   notFoundSchema,
   errorSchema,
 } from "../../schemas";
-import { prisma } from "utils/prisma";
+import { prisma } from "../../utils/prisma";
 
 // Define the PUT /events/:eventId route
 export const updateEventRoute: RouteConfig<

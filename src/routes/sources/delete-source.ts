@@ -4,7 +4,7 @@ import {
   notFoundSchema,
   errorSchema,
 } from "../../schemas";
-import { prisma } from "utils/prisma";
+import { prisma } from "../../utils/prisma";
 
 // Define the DELETE /sources/:sourceId route
 export const deleteSourceRoute: RouteConfig<

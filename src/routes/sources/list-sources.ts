@@ -3,7 +3,7 @@ import {
   sourceListSuccessResponseSchema,
   errorSchema,
 } from "../../schemas";
-import { prisma } from "utils/prisma";
+import { prisma } from "../../utils/prisma";
 
 // Define the GET /sources route
 export const listSourcesRoute: RouteConfig<

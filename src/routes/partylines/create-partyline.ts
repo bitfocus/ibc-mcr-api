@@ -4,7 +4,7 @@ import {
   partylineSuccessResponseSchema,
   errorSchema,
 } from "../../schemas";
-import { prisma } from "utils/prisma";
+import { prisma } from "../../utils/prisma";
 
 // Define the POST /partylines route
 export const createPartylineRoute: RouteConfig<

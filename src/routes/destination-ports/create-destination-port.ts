@@ -4,7 +4,7 @@ import {
   destinationPortSuccessResponseSchema,
   errorSchema,
 } from "../../schemas";
-import { prisma } from "utils/prisma";
+import { prisma } from "../../utils/prisma";
 
 // Define the POST /destination-ports route
 export const createDestinationPortRoute: RouteConfig<

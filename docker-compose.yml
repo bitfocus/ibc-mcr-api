@@ -11,7 +11,8 @@ services:
       - NODE_ENV=development
       - DATABASE_URL=mysql://user:password@db:3306/ibc_db
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - ./src:/app/src
     restart: unless-stopped
@@ -28,6 +29,11 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "user", "-ppassword"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   mysql_data:

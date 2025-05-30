@@ -1,6 +1,6 @@
 import type { RouteConfig } from "../../utils/route-helpers";
 import { eventListSuccessResponseSchema, errorSchema } from "../../schemas";
-import { prisma } from "utils/prisma";
+import { prisma } from "../../utils/prisma";
 
 // Define the GET /events route
 export const listEventsRoute: RouteConfig<undefined, undefined, undefined> = {
