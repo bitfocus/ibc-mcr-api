@@ -36,6 +36,9 @@ COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 # Copy compiled JavaScript code
 COPY --from=builder /app/dist ./dist
 
+# Copy public folder for serving static files
+COPY --from=builder /app/public ./public
+
 # Copy any other necessary files (not needed for runtime)
 # COPY --from=builder /app/tsconfig.json ./
 

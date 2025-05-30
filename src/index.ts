@@ -3,11 +3,13 @@ import "zod-openapi/extend"; // Must be at the top
 import { createDocument } from "zod-openapi";
 import express, { type Application } from "express";
 import swaggerUi from "swagger-ui-express";
+import path from "path";
 
 // Import our route helpers and routes
 import { createRouterAndApiPaths } from "./utils/route-helpers";
 import { routes } from "./routes";
 import { prisma } from "./utils/prisma";
+import { requestLogger, logger } from "./utils/logger";
 
 // Import schemas for OpenAPI components
 import {
@@ -34,7 +36,16 @@ import {
 } from "./schemas";
 
 const app: Application = express();
+
+// Add request logging middleware
+app.use(requestLogger);
+
 app.use(express.json()); // Middleware to parse JSON request bodies
+
+// Serve static files from the React app in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../public")));
+}
 
 // --- Create Router and OpenAPI Path definitions from our route configs ---
 // @ts-ignore - We're mixing different route types, but the function can handle it
@@ -83,7 +94,7 @@ async function seedDatabaseIfEmpty() {
 		const eventCount = await prisma.event.count();
 		
 		if (eventCount === 0) {
-			console.log('Database is empty. Seeding with initial data...');
+			logger.info('Database is empty. Seeding with initial data...');
 			
 			// Create a sample event with sources, destinations, partylines, ports, and flow edges
 			const event = await prisma.event.create({
@@ -177,7 +188,7 @@ async function seedDatabaseIfEmpty() {
 							destinationPortId: videoDestPort.id
 						}
 					});
-					console.log(`Created flow edge: Video port ${videoSourcePort.id} -> ${videoDestPort.id}`);
+					logger.success(`Created flow edge: Video port ${videoSourcePort.id} -> ${videoDestPort.id}`);
 				}
 				
 				// Connect audio ports (channel 1)
@@ -191,7 +202,7 @@ async function seedDatabaseIfEmpty() {
 							destinationPortId: audioDestPort1.id
 						}
 					});
-					console.log(`Created flow edge: Audio port ${audioSourcePort1.id} -> ${audioDestPort1.id}`);
+					logger.success(`Created flow edge: Audio port ${audioSourcePort1.id} -> ${audioDestPort1.id}`);
 				}
 				
 				// Connect audio ports (channel 2)
@@ -205,29 +216,37 @@ async function seedDatabaseIfEmpty() {
 							destinationPortId: audioDestPort2.id
 						}
 					});
-					console.log(`Created flow edge: Audio port ${audioSourcePort2.id} -> ${audioDestPort2.id}`);
+					logger.success(`Created flow edge: Audio port ${audioSourcePort2.id} -> ${audioDestPort2.id}`);
 				}
 			}
 			
-			console.log(`Seeded database with event: ${event.id} - ${event.title}`);
-			console.log(`Created source: ${event.sources[0].id} - ${event.sources[0].label}`);
-			console.log(`Created destination: ${event.destinations[0].id} - ${event.destinations[0].label}`);
-			console.log(`Created partyline: ${event.partylines[0].id} - ${event.partylines[0].title}`);
+			logger.success(`Seeded database with event: ${event.id} - ${event.title}`);
+			logger.success(`Created source: ${event.sources[0].id} - ${event.sources[0].label}`);
+			logger.success(`Created destination: ${event.destinations[0].id} - ${event.destinations[0].label}`);
+			logger.success(`Created partyline: ${event.partylines[0].id} - ${event.partylines[0].title}`);
 		} else {
-			console.log(`Database already contains ${eventCount} events. Skipping seeding.`);
+			logger.info(`Database already contains ${eventCount} events. Skipping seeding.`);
 		}
 	} catch (error) {
-		console.error('Error seeding database:', error);
+		logger.error(`Error seeding database: ${error}`);
 	}
 }
 
 // --- Start the Server ---
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, async () => {
-	console.log(`Server is running on http://localhost:${PORT}`);
-	console.log(`API Docs available at http://localhost:${PORT}/docs`);
-	console.log(`API endpoints available under http://localhost:${PORT}/api/v1`);
+	logger.info(`Server is running on http://localhost:${PORT}`);
+	logger.info(`API Docs available at http://localhost:${PORT}/docs`);
+	logger.info(`API endpoints available under http://localhost:${PORT}/api/v1`);
 	
 	// Seed the database if needed
 	await seedDatabaseIfEmpty();
 });
+
+// Serve the React app for any request that doesn't match an API route
+// This should be after all other routes
+if (process.env.NODE_ENV === "production") {
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/index.html"));
+  });
+}

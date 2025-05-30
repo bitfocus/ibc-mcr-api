@@ -8,7 +8,7 @@ dist/
 build/
 out/
 .next/
-
+public/
 # Environment variables
 .env
 .env.local
