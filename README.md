@@ -45,7 +45,7 @@ http://localhost:3000/docs
 
 ## Technology Stack
 
-- **Node.js**: JavaScript runtime
+- **Node.js v22.1.0**: JavaScript runtime
 - **Express**: Web framework for Node.js
 - **TypeScript**: Type-safe JavaScript
 - **Prisma**: ORM for database access
@@ -58,8 +58,8 @@ http://localhost:3000/docs
 
 ### Prerequisites
 
-- Node.js (v16 or higher)
-- npm or yarn
+- Node.js (v22.1.0 or higher)
+- NPM 
 - MySQL database (or another database supported by Prisma)
 
 ### Installation
