@@ -24,7 +24,7 @@ export const destinationPortChannelSchema = z.number().int().min(1).openapi({
 	example: 1,
 })
 
-export const destinationPortDescriptionSchema = z.string().optional().openapi({
+export const destinationPortDescriptionSchema = z.string().nullable().optional().openapi({
 	description: 'Optional description of the destination port',
 	example: 'Main audio output',
 })
