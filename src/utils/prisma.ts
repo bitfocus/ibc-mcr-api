@@ -1,18 +1,18 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client'
 
-export const prisma = new PrismaClient();
+export const prisma = new PrismaClient()
 
 async function dbInit() {
 	try {
-		await prisma.$disconnect();
+		await prisma.$disconnect()
 	} catch (e) {
-		console.error(e);
-		await prisma.$disconnect();
-		process.exit(1);
+		console.error(e)
+		await prisma.$disconnect()
+		process.exit(1)
 	}
 }
 
 // Faster docker termination
 process.on('SIGTERM', () => {
-	process.exit();
-});
+	process.exit()
+})
