@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { api, apiclient } from '../api'
+import { api } from '../api'
 import { Button } from './ui/button'
 import {
 	Dialog,
@@ -13,18 +13,28 @@ import { Input } from '@/components/ui/input'
 import { DataTable } from './table'
 import type { ColumnDef } from '@tanstack/react-table'
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import type { paths } from '@/api-schema'
+import { EventEdit } from './EventEdit'
 
 export const Events = () => {
-	const { data, error, isLoading, refetch } = api.useQuery('get', '/events', { params: {} })
-	const [open, setOpen] = useState(false)
+	const {
+		data: eventsData,
+		error: eventsError,
+		isLoading: eventsLoading,
+		refetch: refetchEvents,
+	} = api.useQuery('get', '/events', { params: {} })
+	const [createEventDialogOpen, setCreateEventDialogOpen] = useState(false)
+	const [createEventTitle, setCreateEventTitle] = useState('')
+	const [selectedEventId, setSelectedEventId] = useState<string | null>(null)
 
 	const deleteEvent = api.useMutation('delete', '/events/{eventId}')
 	const createEvent = api.useMutation('post', '/events')
 
-	const [createEventTitle, setCreateEventTitle] = useState('')
-	const [selectedEventId, setSelectedEventId] = useState<string | null>(null)
-	const columns: ColumnDef<paths['/events/{eventId}']['get']['responses']['200']['content']['application/json']>[] = [
+	const columns: ColumnDef<{
+		id: string
+		title: string
+		createdAt: string
+		updatedAt: string
+	}>[] = [
 		{
 			accessorKey: 'view',
 			header: 'Edit',
@@ -75,7 +85,7 @@ export const Events = () => {
 							if (selectedEventId === row.original.id) {
 								setSelectedEventId(null)
 							}
-							refetch()
+							refetchEvents()
 						}}
 					>
 						Delete
@@ -85,115 +95,85 @@ export const Events = () => {
 		},
 	]
 
-	if (isLoading || !data) return 'Loading...'
-	if (error) return `An error occured: ${error.message}`
-
-	const selectedEvent = data.find((event) => event.id === selectedEventId)
+	if (eventsLoading || !eventsData) return 'Loading...'
+	if (eventsError) return `An error occured: ${eventsError.message}`
 
 	return (
-		<div>
-			<div className="flex w-full">
-				<div className="w-1/2 pl-4">
-					<Card className="mx-auto mt-4">
-						<CardHeader>
-							<CardTitle>Events</CardTitle>
-							<CardDescription>
-								An identifier for the broadcasting event/session we want to define
-							</CardDescription>
-							<CardAction>
-								<Dialog open={open} onOpenChange={setOpen}>
-									<DialogTrigger>
-										<Button>Create</Button>
-									</DialogTrigger>
-									<DialogContent>
-										<DialogHeader>
-											<DialogTitle>Create Event</DialogTitle>
-											<DialogDescription>
-												Create a new broadcasting event/session
-												<form
-													className="flex flex-col gap-2 mt-4"
-													onSubmit={async () => {
-														await createEvent.mutateAsync({
-															body: {
-																title: createEventTitle,
-															},
-														})
-														setCreateEventTitle('')
-														setOpen(false)
-														refetch()
-													}}
-												>
-													<Input
-														placeholder="Event 2026"
-														value={createEventTitle}
-														onChange={(e) => setCreateEventTitle(e.target.value)}
-													/>
+		<div className="flex w-full">
+			<div className={selectedEventId ? "w-1/3 pl-4" : "w-full pl-4"}>
+				<Card className="mx-auto mt-4">
+					<CardHeader>
+						<CardTitle>Events</CardTitle>
+						<CardDescription>
+							An identifier for the broadcasting event/session we want to define
+						</CardDescription>
+						<CardAction>
+							<Dialog open={createEventDialogOpen} onOpenChange={setCreateEventDialogOpen}>
+								<DialogTrigger asChild>
+									<Button>Create</Button>
+								</DialogTrigger>
+								<DialogContent>
+									<DialogHeader>
+										<DialogTitle>Create Event</DialogTitle>
+										<DialogDescription>
+											Create a new broadcasting event/session
+										</DialogDescription>
+									</DialogHeader>
+									<form
+										className="flex flex-col gap-2 mt-4"
+										onSubmit={async (e) => {
+											e.preventDefault()
+											await createEvent.mutateAsync({
+												body: {
+													title: createEventTitle,
+												},
+											})
+											setCreateEventTitle('')
+											setCreateEventDialogOpen(false)
+											refetchEvents()
+										}}
+									>
+										<Input
+											placeholder="Event 2026"
+											value={createEventTitle}
+											onChange={(e) => setCreateEventTitle(e.target.value)}
+										/>
 
-													<Button>Create</Button>
-													<Button
-														variant="outline"
-														onClick={() => {
-															setOpen(false)
-														}}
-													>
-														Cancel
-													</Button>
-												</form>
-											</DialogDescription>
-										</DialogHeader>
-									</DialogContent>
-								</Dialog>
-							</CardAction>
-						</CardHeader>
-						<CardContent>
-							<DataTable columns={columns} data={data} />
-						</CardContent>
-						<CardFooter className="text-neutral-300">
-							{/* number of events */}
-							<p>
-								{data.length} event{data.length === 1 ? '' : 's'}
-							</p>
-						</CardFooter>
-					</Card>
-				</div>
-				{selectedEventId && (
-					<div className="flex flex-col gap-2 w-1/2 p-4">
-						<Card className="">
-							<CardHeader>
-								<CardTitle>{selectedEvent?.title}</CardTitle>
-								<CardDescription>{selectedEventId}</CardDescription>
-							</CardHeader>
-						</Card>
-						<Card className="">
-							<CardHeader>
-								<CardTitle>Outputs</CardTitle>
-								<CardDescription>Outputs are our TX feeds</CardDescription>
-								<CardAction>
-									<Button>Create</Button>
-								</CardAction>
-							</CardHeader>
-						</Card>
-						<Card className="">
-							<CardHeader>
-								<CardTitle>Inputs</CardTitle>
-								<CardDescription>Outputs are our TX feeds</CardDescription>
-								<CardAction>
-									<Button>Create</Button>
-								</CardAction>
-							</CardHeader>
-						</Card>
-						<Card className="">
-							<CardHeader>
-								<CardTitle>Partylines</CardTitle>
-								<CardDescription>Communication for the event</CardDescription>
-								<CardAction>
-									<Button>Create</Button>
-								</CardAction>
-							</CardHeader>
-						</Card>
-					</div>
-				)}
+										<Button type="submit">Create</Button>
+										<Button
+											type="button"
+											variant="outline"
+											onClick={() => {
+												setCreateEventDialogOpen(false)
+											}}
+										>
+											Cancel
+										</Button>
+									</form>
+								</DialogContent>
+							</Dialog>
+						</CardAction>
+					</CardHeader>
+					<CardContent>
+						<DataTable columns={columns} data={eventsData} />
+					</CardContent>
+					<CardFooter className="text-neutral-300">
+						{/* number of events */}
+						<p>
+							{eventsData.length} event{eventsData.length === 1 ? '' : 's'}
+						</p>
+					</CardFooter>
+				</Card>
 			</div>
+			
+			{selectedEventId && (
+				<div className="w-2/3">
+					<EventEdit 
+						eventId={selectedEventId} 
+						onEventUpdated={refetchEvents} 
+					/>
+				</div>
+			)}
 		</div>
 	)
 }

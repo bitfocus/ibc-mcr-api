@@ -5,6 +5,7 @@ import { destinationRoutes } from './destinations'
 import { partylineRoutes } from './partylines'
 import { sourcePortRoutes } from './source-ports'
 import { destinationPortRoutes } from './destination-ports'
+import { flowEdgesRoutes } from './flow-edges'
 
 export const routes = [
 	...eventRoutes,
@@ -13,4 +14,5 @@ export const routes = [
 	...partylineRoutes,
 	...sourcePortRoutes,
 	...destinationPortRoutes,
+	...Object.values(flowEdgesRoutes),
 ]

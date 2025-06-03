@@ -27,7 +27,11 @@ export const listSourcesRoute: RouteConfig<undefined, undefined, undefined> = {
 		console.log('HANDLER: Listing all sources')
 
 		try {
-			const sources = await prisma.source.findMany()
+			const sources = await prisma.source.findMany({
+				include: {
+					ports: true,
+				},
+			})
 
 			// Format dates as ISO strings for the response
 			const response = sources.map((source) => ({

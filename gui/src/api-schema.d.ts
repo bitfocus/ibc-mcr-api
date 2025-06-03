@@ -4,2041 +4,2370 @@
  */
 
 export interface paths {
-	'/events/{eventId}': {
-		parameters: {
-			query?: never
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		/** Get an event by ID */
-		get: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for an event */
-					eventId: components['schemas']['EventId']
-				}
-				cookie?: never
-			}
-			requestBody?: never
-			responses: {
-				/** @description OK - Successfully retrieved event */
-				200: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['EventResponse']
-					}
-				}
-				/** @description Bad Request - Invalid Event ID format */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Event not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-			}
-		}
-		/** Update an event */
-		put: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for an event */
-					eventId: components['schemas']['EventId']
-				}
-				cookie?: never
-			}
-			requestBody?: {
-				content: {
-					'application/json': {
-						title: components['schemas']['EventTitle']
-						sources?: {
-							id: components['schemas']['SourceId']
-							label: components['schemas']['SourceLabel']
-						}[]
-						destinations?: {
-							id: components['schemas']['DestinationId']
-							label: components['schemas']['DestinationLabel']
-						}[]
-						partylines?: {
-							/**
-							 * Format: uuid
-							 * @description A UUIDv4 identifier for a partyline
-							 * @example 83824df7-2831-4ed9-a711-ea1a4bfb4f38
-							 */
-							id: string
-							/**
-							 * @description A communication partyline title
-							 * @example Main Communication Channel
-							 */
-							title: string
-						}[]
-					}
-				}
-			}
-			responses: {
-				/** @description OK - Event updated successfully */
-				200: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['EventResponse']
-					}
-				}
-				/** @description Bad Request - Invalid input */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Event not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-			}
-		}
-		post?: never
-		/** Delete an event */
-		delete: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for an event */
-					eventId: components['schemas']['EventId']
-				}
-				cookie?: never
-			}
-			requestBody?: never
-			responses: {
-				/** @description No Content - Successfully deleted event */
-				204: {
-					headers: {
-						[name: string]: unknown
-					}
-					content?: never
-				}
-				/** @description Bad Request - Invalid event ID format */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Event not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-				/** @description Internal Server Error */
-				500: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-			}
-		}
-		options?: never
-		head?: never
-		/** Update an event partially */
-		patch: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for an event */
-					eventId: components['schemas']['EventId']
-				}
-				cookie?: never
-			}
-			requestBody?: {
-				content: {
-					'application/json': {
-						title?: components['schemas']['EventTitle']
-					}
-				}
-			}
-			responses: {
-				/** @description OK - Event updated successfully */
-				200: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['EventResponse']
-					}
-				}
-				/** @description Bad Request - Invalid input */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Event not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-			}
-		}
-		trace?: never
-	}
-	'/events': {
-		parameters: {
-			query?: never
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		/** List all events */
-		get: {
-			parameters: {
-				query?: never
-				header?: never
-				path?: never
-				cookie?: never
-			}
-			requestBody?: never
-			responses: {
-				/** @description OK - Successfully retrieved events */
-				200: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['EventListResponse']
-					}
-				}
-				/** @description Internal Server Error */
-				500: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-			}
-		}
-		put?: never
-		/** Create a new event */
-		post: {
-			parameters: {
-				query?: never
-				header?: never
-				path?: never
-				cookie?: never
-			}
-			requestBody?: {
-				content: {
-					'application/json': {
-						title: components['schemas']['EventTitle']
-					}
-				}
-			}
-			responses: {
-				/** @description Created - Successfully created event */
-				201: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['EventResponse']
-					}
-				}
-				/** @description Bad Request - Invalid request body */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Internal Server Error */
-				500: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-			}
-		}
-		delete?: never
-		options?: never
-		head?: never
-		patch?: never
-		trace?: never
-	}
-	'/sources/{sourceId}': {
-		parameters: {
-			query?: never
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		/** Get a source by ID */
-		get: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for a source */
-					sourceId: components['schemas']['SourceId']
-				}
-				cookie?: never
-			}
-			requestBody?: never
-			responses: {
-				/** @description OK - Successfully retrieved source */
-				200: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['SourceResponse']
-					}
-				}
-				/** @description Bad Request - Invalid Source ID format */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Source not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-			}
-		}
-		/** Replace a source */
-		put: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for a source */
-					sourceId: components['schemas']['SourceId']
-				}
-				cookie?: never
-			}
-			requestBody?: {
-				content: {
-					'application/json': {
-						label: components['schemas']['SourceLabel']
-						eventId: components['schemas']['EventId']
-					}
-				}
-			}
-			responses: {
-				/** @description OK - Successfully updated source */
-				200: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['SourceResponse']
-					}
-				}
-				/** @description Bad Request - Invalid request body or source ID */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Source not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-				/** @description Internal Server Error */
-				500: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-			}
-		}
-		post?: never
-		/** Delete a source */
-		delete: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for a source */
-					sourceId: components['schemas']['SourceId']
-				}
-				cookie?: never
-			}
-			requestBody?: never
-			responses: {
-				/** @description No Content - Successfully deleted source */
-				204: {
-					headers: {
-						[name: string]: unknown
-					}
-					content?: never
-				}
-				/** @description Bad Request - Invalid source ID format */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Source not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-				/** @description Internal Server Error */
-				500: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-			}
-		}
-		options?: never
-		head?: never
-		/** Update a source partially */
-		patch: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for a source */
-					sourceId: components['schemas']['SourceId']
-				}
-				cookie?: never
-			}
-			requestBody?: {
-				content: {
-					'application/json': {
-						label?: components['schemas']['SourceLabel']
-						eventId?: components['schemas']['EventId']
-					}
-				}
-			}
-			responses: {
-				/** @description OK - Successfully updated source */
-				200: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['SourceResponse']
-					}
-				}
-				/** @description Bad Request - Invalid request body or source ID */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Source not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-				/** @description Internal Server Error */
-				500: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-			}
-		}
-		trace?: never
-	}
-	'/sources': {
-		parameters: {
-			query?: never
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		get?: never
-		put?: never
-		/** Create a new source */
-		post: {
-			parameters: {
-				query?: never
-				header?: never
-				path?: never
-				cookie?: never
-			}
-			requestBody?: {
-				content: {
-					'application/json': {
-						label: components['schemas']['SourceLabel']
-						eventId: components['schemas']['EventId']
-					}
-				}
-			}
-			responses: {
-				/** @description Created - Successfully created source */
-				201: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['SourceResponse']
-					}
-				}
-				/** @description Bad Request - Invalid request body */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Internal Server Error */
-				500: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-			}
-		}
-		delete?: never
-		options?: never
-		head?: never
-		patch?: never
-		trace?: never
-	}
-	'/destinations/{destinationId}': {
-		parameters: {
-			query?: never
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		/** Get a destination by ID */
-		get: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for a destination */
-					destinationId: components['schemas']['DestinationId']
-				}
-				cookie?: never
-			}
-			requestBody?: never
-			responses: {
-				/** @description OK - Successfully retrieved destination */
-				200: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['DestinationResponse']
-					}
-				}
-				/** @description Bad Request - Invalid Destination ID format */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Destination not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-			}
-		}
-		/** Replace a destination */
-		put: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for a destination */
-					destinationId: components['schemas']['DestinationId']
-				}
-				cookie?: never
-			}
-			requestBody?: {
-				content: {
-					'application/json': {
-						label: components['schemas']['DestinationLabel']
-						eventId: components['schemas']['EventId']
-					}
-				}
-			}
-			responses: {
-				/** @description OK - Successfully updated destination */
-				200: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['DestinationResponse']
-					}
-				}
-				/** @description Bad Request - Invalid request body or destination ID */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Destination not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-				/** @description Internal Server Error */
-				500: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-			}
-		}
-		post?: never
-		/** Delete a destination */
-		delete: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for a destination */
-					destinationId: components['schemas']['DestinationId']
-				}
-				cookie?: never
-			}
-			requestBody?: never
-			responses: {
-				/** @description No Content - Successfully deleted destination */
-				204: {
-					headers: {
-						[name: string]: unknown
-					}
-					content?: never
-				}
-				/** @description Bad Request - Invalid destination ID format */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Destination not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-				/** @description Internal Server Error */
-				500: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-			}
-		}
-		options?: never
-		head?: never
-		/** Update a destination partially */
-		patch: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for a destination */
-					destinationId: components['schemas']['DestinationId']
-				}
-				cookie?: never
-			}
-			requestBody?: {
-				content: {
-					'application/json': {
-						label?: components['schemas']['DestinationLabel']
-						eventId?: components['schemas']['EventId']
-					}
-				}
-			}
-			responses: {
-				/** @description OK - Successfully updated destination */
-				200: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['DestinationResponse']
-					}
-				}
-				/** @description Bad Request - Invalid request body or destination ID */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Destination not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-				/** @description Internal Server Error */
-				500: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-			}
-		}
-		trace?: never
-	}
-	'/destinations': {
-		parameters: {
-			query?: never
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		get?: never
-		put?: never
-		/** Create a new destination */
-		post: {
-			parameters: {
-				query?: never
-				header?: never
-				path?: never
-				cookie?: never
-			}
-			requestBody?: {
-				content: {
-					'application/json': {
-						label: components['schemas']['DestinationLabel']
-						eventId: components['schemas']['EventId']
-					}
-				}
-			}
-			responses: {
-				/** @description Created - Successfully created destination */
-				201: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['DestinationResponse']
-					}
-				}
-				/** @description Bad Request - Invalid request body */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Internal Server Error */
-				500: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-			}
-		}
-		delete?: never
-		options?: never
-		head?: never
-		patch?: never
-		trace?: never
-	}
-	'/partylines/{partylineId}': {
-		parameters: {
-			query?: never
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		/** Get a partyline by ID */
-		get: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for a partyline */
-					partylineId: string
-				}
-				cookie?: never
-			}
-			requestBody?: never
-			responses: {
-				/** @description OK - Successfully retrieved partyline */
-				200: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['PartylineResponse']
-					}
-				}
-				/** @description Bad Request - Invalid Partyline ID format */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Partyline not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-			}
-		}
-		/** Update a partyline by ID (full update) */
-		put: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for a partyline */
-					partylineId: string
-				}
-				cookie?: never
-			}
-			requestBody?: {
-				content: {
-					'application/json': {
-						/**
-						 * @description A communication partyline title
-						 * @example Main Communication Channel
-						 */
-						title: string
-					}
-				}
-			}
-			responses: {
-				/** @description OK - Successfully updated partyline */
-				200: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['PartylineResponse']
-					}
-				}
-				/** @description Bad Request - Invalid request body or partyline ID */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Partyline not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-				/** @description Internal Server Error */
-				500: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-			}
-		}
-		post?: never
-		/** Delete a partyline by ID */
-		delete: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for a partyline */
-					partylineId: string
-				}
-				cookie?: never
-			}
-			requestBody?: never
-			responses: {
-				/** @description No Content - Successfully deleted partyline */
-				204: {
-					headers: {
-						[name: string]: unknown
-					}
-					content?: never
-				}
-				/** @description Bad Request - Invalid partyline ID format */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Partyline not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-				/** @description Internal Server Error */
-				500: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-			}
-		}
-		options?: never
-		head?: never
-		/** Update a partyline by ID (partial update) */
-		patch: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for a partyline */
-					partylineId: string
-				}
-				cookie?: never
-			}
-			requestBody?: {
-				content: {
-					'application/json': {
-						/**
-						 * @description A communication partyline title
-						 * @example Main Communication Channel
-						 */
-						title?: string
-					}
-				}
-			}
-			responses: {
-				/** @description OK - Successfully updated partyline */
-				200: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['PartylineResponse']
-					}
-				}
-				/** @description Bad Request - Invalid request body or partyline ID */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Partyline not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-				/** @description Internal Server Error */
-				500: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-			}
-		}
-		trace?: never
-	}
-	'/partylines': {
-		parameters: {
-			query?: never
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		get?: never
-		put?: never
-		/** Create a new partyline */
-		post: {
-			parameters: {
-				query?: never
-				header?: never
-				path?: never
-				cookie?: never
-			}
-			requestBody?: {
-				content: {
-					'application/json': {
-						/**
-						 * @description A communication partyline title
-						 * @example Main Communication Channel
-						 */
-						title: string
-						/** Format: uuid */
-						eventId: string
-					}
-				}
-			}
-			responses: {
-				/** @description Created - Successfully created partyline */
-				201: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['PartylineResponse']
-					}
-				}
-				/** @description Bad Request - Invalid request body */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Internal Server Error */
-				500: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-			}
-		}
-		delete?: never
-		options?: never
-		head?: never
-		patch?: never
-		trace?: never
-	}
-	'/source-ports/{sourcePortId}': {
-		parameters: {
-			query?: never
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		/** Get a source port by ID */
-		get: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for a source port */
-					sourcePortId: string
-				}
-				cookie?: never
-			}
-			requestBody?: never
-			responses: {
-				/** @description OK - Successfully retrieved source port */
-				200: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['SourcePortResponse']
-					}
-				}
-				/** @description Bad Request - Invalid Source Port ID format */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Source Port not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-			}
-		}
-		/** Update a source port by ID (full update) */
-		put: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for a source port */
-					sourcePortId: string
-				}
-				cookie?: never
-			}
-			requestBody?: {
-				content: {
-					'application/json': {
-						/**
-						 * @description The type of the source port (e.g., video, audio)
-						 * @example audio
-						 */
-						type: string
-						/**
-						 * @description The channel number of the source port
-						 * @example 1
-						 */
-						channel: number
-						/**
-						 * @description Optional description of the source port
-						 * @example Main audio feed
-						 */
-						description?: string
-					}
-				}
-			}
-			responses: {
-				/** @description OK - Successfully updated source port */
-				200: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['SourcePortResponse']
-					}
-				}
-				/** @description Bad Request - Invalid request body or source port ID */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Source port not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-				/** @description Internal Server Error */
-				500: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-			}
-		}
-		post?: never
-		/** Delete a source port by ID */
-		delete: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for a source port */
-					sourcePortId: string
-				}
-				cookie?: never
-			}
-			requestBody?: never
-			responses: {
-				/** @description No Content - Successfully deleted source port */
-				204: {
-					headers: {
-						[name: string]: unknown
-					}
-					content?: never
-				}
-				/** @description Bad Request - Invalid source port ID format */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Source port not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-				/** @description Internal Server Error */
-				500: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-			}
-		}
-		options?: never
-		head?: never
-		/** Update a source port by ID (partial update) */
-		patch: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for a source port */
-					sourcePortId: string
-				}
-				cookie?: never
-			}
-			requestBody?: {
-				content: {
-					'application/json': {
-						/**
-						 * @description The type of the source port (e.g., video, audio)
-						 * @example audio
-						 */
-						type?: string
-						/**
-						 * @description The channel number of the source port
-						 * @example 1
-						 */
-						channel?: number
-						/**
-						 * @description Optional description of the source port
-						 * @example Main audio feed
-						 */
-						description?: string
-					}
-				}
-			}
-			responses: {
-				/** @description OK - Successfully updated source port */
-				200: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['SourcePortResponse']
-					}
-				}
-				/** @description Bad Request - Invalid request body or source port ID */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Source port not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-				/** @description Internal Server Error */
-				500: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-			}
-		}
-		trace?: never
-	}
-	'/source-ports': {
-		parameters: {
-			query?: never
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		get?: never
-		put?: never
-		/** Create a new source port */
-		post: {
-			parameters: {
-				query?: never
-				header?: never
-				path?: never
-				cookie?: never
-			}
-			requestBody?: {
-				content: {
-					'application/json': {
-						/**
-						 * @description The type of the source port (e.g., video, audio)
-						 * @example audio
-						 */
-						type: string
-						/**
-						 * @description The channel number of the source port
-						 * @example 1
-						 */
-						channel: number
-						/**
-						 * @description Optional description of the source port
-						 * @example Main audio feed
-						 */
-						description?: string
-						/** Format: uuid */
-						sourceId: string
-					}
-				}
-			}
-			responses: {
-				/** @description Created - Successfully created source port */
-				201: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['SourcePortResponse']
-					}
-				}
-				/** @description Bad Request - Invalid request body */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Internal Server Error */
-				500: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-			}
-		}
-		delete?: never
-		options?: never
-		head?: never
-		patch?: never
-		trace?: never
-	}
-	'/destination-ports/{destinationPortId}': {
-		parameters: {
-			query?: never
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		/** Get a destination port by ID */
-		get: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for a destination port */
-					destinationPortId: string
-				}
-				cookie?: never
-			}
-			requestBody?: never
-			responses: {
-				/** @description OK - Successfully retrieved destination port */
-				200: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['DestinationPortResponse']
-					}
-				}
-				/** @description Bad Request - Invalid Destination Port ID format */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Destination Port not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-			}
-		}
-		/** Update a destination port by ID (full update) */
-		put: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for a destination port */
-					destinationPortId: string
-				}
-				cookie?: never
-			}
-			requestBody?: {
-				content: {
-					'application/json': {
-						/**
-						 * @description The type of the destination port (e.g., video, audio)
-						 * @example audio
-						 */
-						type: string
-						/**
-						 * @description The channel number of the destination port
-						 * @example 1
-						 */
-						channel: number
-						/**
-						 * @description Optional description of the destination port
-						 * @example Main audio output
-						 */
-						description?: string
-					}
-				}
-			}
-			responses: {
-				/** @description OK - Successfully updated destination port */
-				200: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['DestinationPortResponse']
-					}
-				}
-				/** @description Bad Request - Invalid request body or destination port ID */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Destination port not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-				/** @description Internal Server Error */
-				500: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-			}
-		}
-		post?: never
-		/** Delete a destination port by ID */
-		delete: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for a destination port */
-					destinationPortId: string
-				}
-				cookie?: never
-			}
-			requestBody?: never
-			responses: {
-				/** @description No Content - Successfully deleted destination port */
-				204: {
-					headers: {
-						[name: string]: unknown
-					}
-					content?: never
-				}
-				/** @description Bad Request - Invalid destination port ID format */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Destination port not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-				/** @description Internal Server Error */
-				500: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-			}
-		}
-		options?: never
-		head?: never
-		/** Update a destination port by ID (partial update) */
-		patch: {
-			parameters: {
-				query?: never
-				header?: never
-				path: {
-					/** @description A UUIDv4 identifier for a destination port */
-					destinationPortId: string
-				}
-				cookie?: never
-			}
-			requestBody?: {
-				content: {
-					'application/json': {
-						/**
-						 * @description The type of the destination port (e.g., video, audio)
-						 * @example audio
-						 */
-						type?: string
-						/**
-						 * @description The channel number of the destination port
-						 * @example 1
-						 */
-						channel?: number
-						/**
-						 * @description Optional description of the destination port
-						 * @example Main audio output
-						 */
-						description?: string
-					}
-				}
-			}
-			responses: {
-				/** @description OK - Successfully updated destination port */
-				200: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['DestinationPortResponse']
-					}
-				}
-				/** @description Bad Request - Invalid request body or destination port ID */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Not Found - Destination port not found */
-				404: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['NotFoundResponse']
-					}
-				}
-				/** @description Internal Server Error */
-				500: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-			}
-		}
-		trace?: never
-	}
-	'/destination-ports': {
-		parameters: {
-			query?: never
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		get?: never
-		put?: never
-		/** Create a new destination port */
-		post: {
-			parameters: {
-				query?: never
-				header?: never
-				path?: never
-				cookie?: never
-			}
-			requestBody?: {
-				content: {
-					'application/json': {
-						/**
-						 * @description The type of the destination port (e.g., video, audio)
-						 * @example audio
-						 */
-						type: string
-						/**
-						 * @description The channel number of the destination port
-						 * @example 1
-						 */
-						channel: number
-						/**
-						 * @description Optional description of the destination port
-						 * @example Main audio output
-						 */
-						description?: string
-						/** Format: uuid */
-						destinationId: string
-					}
-				}
-			}
-			responses: {
-				/** @description Created - Successfully created destination port */
-				201: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['DestinationPortResponse']
-					}
-				}
-				/** @description Bad Request - Invalid request body */
-				400: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-				/** @description Internal Server Error */
-				500: {
-					headers: {
-						[name: string]: unknown
-					}
-					content: {
-						'application/json': components['schemas']['ErrorResponse']
-					}
-				}
-			}
-		}
-		delete?: never
-		options?: never
-		head?: never
-		patch?: never
-		trace?: never
-	}
+    "/events/{eventId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get an event by ID */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for an event */
+                    eventId: components["schemas"]["EventId"];
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK - Successfully retrieved event */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["EventResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid Event ID format */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Event not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+            };
+        };
+        /** Update an event */
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for an event */
+                    eventId: components["schemas"]["EventId"];
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": {
+                        title: components["schemas"]["EventTitle"];
+                        sources?: {
+                            id: components["schemas"]["SourceId"];
+                            label: components["schemas"]["SourceLabel"];
+                        }[];
+                        destinations?: {
+                            id: components["schemas"]["DestinationId"];
+                            label: components["schemas"]["DestinationLabel"];
+                        }[];
+                        partylines?: {
+                            /**
+                             * Format: uuid
+                             * @description A UUIDv4 identifier for a partyline
+                             * @example 83824df7-2831-4ed9-a711-ea1a4bfb4f38
+                             */
+                            id: string;
+                            /**
+                             * @description A communication partyline title
+                             * @example Main Communication Channel
+                             */
+                            title: string;
+                        }[];
+                    };
+                };
+            };
+            responses: {
+                /** @description OK - Event updated successfully */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["EventResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid input */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Event not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        /** Delete an event */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for an event */
+                    eventId: components["schemas"]["EventId"];
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description No Content - Successfully deleted event */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Bad Request - Invalid event ID format */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Event not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        /** Update an event partially */
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for an event */
+                    eventId: components["schemas"]["EventId"];
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": {
+                        title?: components["schemas"]["EventTitle"];
+                    };
+                };
+            };
+            responses: {
+                /** @description OK - Event updated successfully */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["EventResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid input */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Event not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+            };
+        };
+        trace?: never;
+    };
+    "/events": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List all events */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK - Successfully retrieved events */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["EventListResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        /** Create a new event */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": {
+                        title: components["schemas"]["EventTitle"];
+                    };
+                };
+            };
+            responses: {
+                /** @description Created - Successfully created event */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["EventResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid request body */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/sources/{sourceId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a source by ID */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a source */
+                    sourceId: components["schemas"]["SourceId"];
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK - Successfully retrieved source */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SourceResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid Source ID format */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Source not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+            };
+        };
+        /** Replace a source */
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a source */
+                    sourceId: components["schemas"]["SourceId"];
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": {
+                        label: components["schemas"]["SourceLabel"];
+                        eventId: components["schemas"]["EventId"];
+                    };
+                };
+            };
+            responses: {
+                /** @description OK - Successfully updated source */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SourceResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid request body or source ID */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Source not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        /** Delete a source */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a source */
+                    sourceId: components["schemas"]["SourceId"];
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description No Content - Successfully deleted source */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Bad Request - Invalid source ID format */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Source not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        /** Update a source partially */
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a source */
+                    sourceId: components["schemas"]["SourceId"];
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": {
+                        label?: components["schemas"]["SourceLabel"];
+                        eventId?: components["schemas"]["EventId"];
+                    };
+                };
+            };
+            responses: {
+                /** @description OK - Successfully updated source */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SourceResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid request body or source ID */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Source not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        trace?: never;
+    };
+    "/sources": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create a new source */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": {
+                        label: components["schemas"]["SourceLabel"];
+                        eventId: components["schemas"]["EventId"];
+                    };
+                };
+            };
+            responses: {
+                /** @description Created - Successfully created source */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SourceResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid request body */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/destinations/{destinationId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a destination by ID */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a destination */
+                    destinationId: components["schemas"]["DestinationId"];
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK - Successfully retrieved destination */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["DestinationResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid Destination ID format */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Destination not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+            };
+        };
+        /** Replace a destination */
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a destination */
+                    destinationId: components["schemas"]["DestinationId"];
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": {
+                        label: components["schemas"]["DestinationLabel"];
+                        eventId: components["schemas"]["EventId"];
+                    };
+                };
+            };
+            responses: {
+                /** @description OK - Successfully updated destination */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["DestinationResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid request body or destination ID */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Destination not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        /** Delete a destination */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a destination */
+                    destinationId: components["schemas"]["DestinationId"];
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description No Content - Successfully deleted destination */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Bad Request - Invalid destination ID format */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Destination not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        /** Update a destination partially */
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a destination */
+                    destinationId: components["schemas"]["DestinationId"];
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": {
+                        label?: components["schemas"]["DestinationLabel"];
+                        eventId?: components["schemas"]["EventId"];
+                    };
+                };
+            };
+            responses: {
+                /** @description OK - Successfully updated destination */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["DestinationResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid request body or destination ID */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Destination not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        trace?: never;
+    };
+    "/destinations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create a new destination */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": {
+                        label: components["schemas"]["DestinationLabel"];
+                        eventId: components["schemas"]["EventId"];
+                    };
+                };
+            };
+            responses: {
+                /** @description Created - Successfully created destination */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["DestinationResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid request body */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/partylines/{partylineId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a partyline by ID */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a partyline */
+                    partylineId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK - Successfully retrieved partyline */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["PartylineResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid Partyline ID format */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Partyline not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+            };
+        };
+        /** Update a partyline by ID (full update) */
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a partyline */
+                    partylineId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": {
+                        /**
+                         * @description A communication partyline title
+                         * @example Main Communication Channel
+                         */
+                        title: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description OK - Successfully updated partyline */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["PartylineResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid request body or partyline ID */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Partyline not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        /** Delete a partyline by ID */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a partyline */
+                    partylineId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description No Content - Successfully deleted partyline */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Bad Request - Invalid partyline ID format */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Partyline not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        /** Update a partyline by ID (partial update) */
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a partyline */
+                    partylineId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": {
+                        /**
+                         * @description A communication partyline title
+                         * @example Main Communication Channel
+                         */
+                        title?: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description OK - Successfully updated partyline */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["PartylineResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid request body or partyline ID */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Partyline not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        trace?: never;
+    };
+    "/partylines": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create a new partyline */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": {
+                        /**
+                         * @description A communication partyline title
+                         * @example Main Communication Channel
+                         */
+                        title: string;
+                        /** Format: uuid */
+                        eventId: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description Created - Successfully created partyline */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["PartylineResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid request body */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/source-ports/{sourcePortId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a source port by ID */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a source port */
+                    sourcePortId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK - Successfully retrieved source port */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SourcePortResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid Source Port ID format */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Source Port not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+            };
+        };
+        /** Update a source port by ID (full update) */
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a source port */
+                    sourcePortId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": {
+                        /**
+                         * @description The type of the source port (e.g., video, audio)
+                         * @example audio
+                         */
+                        type: string;
+                        /**
+                         * @description The channel number of the source port
+                         * @example 1
+                         */
+                        channel: number;
+                        /**
+                         * @description Optional description of the source port
+                         * @example Main audio feed
+                         */
+                        description?: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description OK - Successfully updated source port */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SourcePortResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid request body or source port ID */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Source port not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        /** Delete a source port by ID */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a source port */
+                    sourcePortId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description No Content - Successfully deleted source port */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Bad Request - Invalid source port ID format */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Source port not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        /** Update a source port by ID (partial update) */
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a source port */
+                    sourcePortId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": {
+                        /**
+                         * @description The type of the source port (e.g., video, audio)
+                         * @example audio
+                         */
+                        type?: string;
+                        /**
+                         * @description The channel number of the source port
+                         * @example 1
+                         */
+                        channel?: number;
+                        /**
+                         * @description Optional description of the source port
+                         * @example Main audio feed
+                         */
+                        description?: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description OK - Successfully updated source port */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SourcePortResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid request body or source port ID */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Source port not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        trace?: never;
+    };
+    "/source-ports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create a new source port */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": {
+                        /**
+                         * @description The type of the source port (e.g., video, audio)
+                         * @example audio
+                         */
+                        type: string;
+                        /**
+                         * @description The channel number of the source port
+                         * @example 1
+                         */
+                        channel: number;
+                        /**
+                         * @description Optional description of the source port
+                         * @example Main audio feed
+                         */
+                        description?: string;
+                        /** Format: uuid */
+                        sourceId: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description Created - Successfully created source port */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SourcePortResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid request body */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/source-ports/by-source/{sourceId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List all source ports for a specific source */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a source */
+                    sourceId: components["schemas"]["SourceId"];
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK - Successfully retrieved source ports */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["SourcePortListResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid Source ID format */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/destination-ports/{destinationPortId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a destination port by ID */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a destination port */
+                    destinationPortId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK - Successfully retrieved destination port */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["DestinationPortResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid Destination Port ID format */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Destination Port not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+            };
+        };
+        /** Update a destination port by ID (full update) */
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a destination port */
+                    destinationPortId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": {
+                        /**
+                         * @description The type of the destination port (e.g., video, audio)
+                         * @example audio
+                         */
+                        type: string;
+                        /**
+                         * @description The channel number of the destination port
+                         * @example 1
+                         */
+                        channel: number;
+                        /**
+                         * @description Optional description of the destination port
+                         * @example Main audio output
+                         */
+                        description?: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description OK - Successfully updated destination port */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["DestinationPortResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid request body or destination port ID */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Destination port not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        /** Delete a destination port by ID */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a destination port */
+                    destinationPortId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description No Content - Successfully deleted destination port */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Bad Request - Invalid destination port ID format */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Destination port not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        /** Update a destination port by ID (partial update) */
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a destination port */
+                    destinationPortId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": {
+                        /**
+                         * @description The type of the destination port (e.g., video, audio)
+                         * @example audio
+                         */
+                        type?: string;
+                        /**
+                         * @description The channel number of the destination port
+                         * @example 1
+                         */
+                        channel?: number;
+                        /**
+                         * @description Optional description of the destination port
+                         * @example Main audio output
+                         */
+                        description?: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description OK - Successfully updated destination port */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["DestinationPortResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid request body or destination port ID */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Destination port not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["NotFoundResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        trace?: never;
+    };
+    "/destination-ports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create a new destination port */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": {
+                        /**
+                         * @description The type of the destination port (e.g., video, audio)
+                         * @example audio
+                         */
+                        type: string;
+                        /**
+                         * @description The channel number of the destination port
+                         * @example 1
+                         */
+                        channel: number;
+                        /**
+                         * @description Optional description of the destination port
+                         * @example Main audio output
+                         */
+                        description?: string;
+                        /** Format: uuid */
+                        destinationId: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description Created - Successfully created destination port */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["DestinationPortResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid request body */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/destination-ports/by-destination/{destinationId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List all destination ports for a specific destination */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a destination */
+                    destinationId: components["schemas"]["DestinationId"];
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK - Successfully retrieved destination ports */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["DestinationPortListResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid Destination ID format */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/flow-edges": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List all flow edges */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK - Successfully retrieved flow edges */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["FlowEdgeResponse"][];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        /** Create a new flow edge */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        sourcePortId: string;
+                        /** Format: uuid */
+                        destinationPortId: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description Created - Successfully created flow edge */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["FlowEdgeResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid request body */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/flow-edges/{flowEdgeId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a flow edge by ID */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a flow edge */
+                    flowEdgeId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK - Successfully retrieved flow edge */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["FlowEdgeResponse"];
+                    };
+                };
+                /** @description Bad Request - Invalid Flow Edge ID format */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Flow Edge not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        /** Delete a flow edge by ID */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description A UUIDv4 identifier for a flow edge */
+                    flowEdgeId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description No Content - Successfully deleted flow edge */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Bad Request - Invalid flow edge ID format */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Not Found - Flow edge not found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ErrorResponse"];
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
-export type webhooks = Record<string, never>
+export type webhooks = Record<string, never>;
 export interface components {
-	schemas: {
-		/**
-		 * Format: uuid
-		 * @description A UUIDv4 identifier for an event
-		 * @example 83824df7-2831-4ed9-a711-ea1a4bfb4f38
-		 */
-		EventId: string
-		/**
-		 * @description A transmission event title
-		 * @example Eurovision 2049
-		 */
-		EventTitle: string
-		/**
-		 * Format: uuid
-		 * @description A UUIDv4 identifier for a source
-		 * @example b57e9f3d-8f7c-4c3a-9f0e-12d8a5e7b9c2
-		 */
-		SourceId: string
-		/**
-		 * @description A label for a source
-		 * @example Main Camera
-		 */
-		SourceLabel: string
-		/**
-		 * Format: uuid
-		 * @description A UUIDv4 identifier for a destination
-		 * @example d8f7c4c3-a9f0-e12d-8a5e-7b9c2b57e9f3
-		 */
-		DestinationId: string
-		/**
-		 * @description A label for a destination
-		 * @example Output Stream 1
-		 */
-		DestinationLabel: string
-		EventResponse: {
-			id: components['schemas']['EventId']
-			title: components['schemas']['EventTitle']
-			/**
-			 * Format: date-time
-			 * @description The date and time when the event was created
-			 * @example 2023-01-01T12:00:00Z
-			 */
-			createdAt: string
-			/**
-			 * Format: date-time
-			 * @description The date and time when the event was last updated
-			 * @example 2023-01-01T12:00:00Z
-			 */
-			updatedAt: string
-			sources?: {
-				id: components['schemas']['SourceId']
-				label: components['schemas']['SourceLabel']
-			}[]
-			destinations?: {
-				id: components['schemas']['DestinationId']
-				label: components['schemas']['DestinationLabel']
-			}[]
-			partylines?: {
-				/**
-				 * Format: uuid
-				 * @description A UUIDv4 identifier for a partyline
-				 * @example 83824df7-2831-4ed9-a711-ea1a4bfb4f38
-				 */
-				id: string
-				/**
-				 * @description A communication partyline title
-				 * @example Main Communication Channel
-				 */
-				title: string
-			}[]
-		}
-		ErrorResponse: {
-			/** @example Validation failed */
-			message: string
-			/** @example {
-			 *       "fieldName": [
-			 *         "Error message 1",
-			 *         "Error message 2"
-			 *       ]
-			 *     } */
-			errors?: {
-				[key: string]: string[]
-			}
-		}
-		NotFoundResponse: {
-			/** @example Resource not found */
-			message: string
-		}
-		EventListResponse: components['schemas']['EventResponse'][]
-		SourceResponse: {
-			id: components['schemas']['SourceId']
-			label: components['schemas']['SourceLabel']
-			eventId: components['schemas']['EventId']
-			/**
-			 * Format: date-time
-			 * @description The date and time when the source was created
-			 * @example 2023-01-01T12:00:00Z
-			 */
-			createdAt: string
-			/**
-			 * Format: date-time
-			 * @description The date and time when the source was last updated
-			 * @example 2023-01-01T12:00:00Z
-			 */
-			updatedAt: string
-		}
-		DestinationResponse: {
-			id: components['schemas']['DestinationId']
-			label: components['schemas']['DestinationLabel']
-			eventId: components['schemas']['EventId']
-			/**
-			 * Format: date-time
-			 * @description The date and time when the destination was created
-			 * @example 2023-01-01T12:00:00Z
-			 */
-			createdAt: string
-			/**
-			 * Format: date-time
-			 * @description The date and time when the destination was last updated
-			 * @example 2023-01-01T12:00:00Z
-			 */
-			updatedAt: string
-		}
-		PartylineResponse: {
-			/**
-			 * Format: uuid
-			 * @description A UUIDv4 identifier for a partyline
-			 * @example 83824df7-2831-4ed9-a711-ea1a4bfb4f38
-			 */
-			id: string
-			/**
-			 * @description A communication partyline title
-			 * @example Main Communication Channel
-			 */
-			title: string
-			/** Format: uuid */
-			eventId: string
-			/**
-			 * Format: date-time
-			 * @description The date and time when the partyline was created
-			 * @example 2023-01-01T12:00:00Z
-			 */
-			createdAt: string
-			/**
-			 * Format: date-time
-			 * @description The date and time when the partyline was last updated
-			 * @example 2023-01-01T12:00:00Z
-			 */
-			updatedAt: string
-		}
-		SourcePortResponse: {
-			/**
-			 * Format: uuid
-			 * @description A UUIDv4 identifier for a source port
-			 * @example 83824df7-2831-4ed9-a711-ea1a4bfb4f38
-			 */
-			id: string
-			/**
-			 * @description The type of the source port (e.g., video, audio)
-			 * @example audio
-			 */
-			type: string
-			/**
-			 * @description The channel number of the source port
-			 * @example 1
-			 */
-			channel: number
-			/**
-			 * @description Optional description of the source port
-			 * @example Main audio feed
-			 */
-			description?: string
-			/** Format: uuid */
-			sourceId: string
-			/**
-			 * Format: date-time
-			 * @description The date and time when the source port was created
-			 * @example 2023-01-01T12:00:00Z
-			 */
-			createdAt: string
-			/**
-			 * Format: date-time
-			 * @description The date and time when the source port was last updated
-			 * @example 2023-01-01T12:00:00Z
-			 */
-			updatedAt: string
-		}
-		DestinationPortResponse: {
-			/**
-			 * Format: uuid
-			 * @description A UUIDv4 identifier for a destination port
-			 * @example 83824df7-2831-4ed9-a711-ea1a4bfb4f38
-			 */
-			id: string
-			/**
-			 * @description The type of the destination port (e.g., video, audio)
-			 * @example audio
-			 */
-			type: string
-			/**
-			 * @description The channel number of the destination port
-			 * @example 1
-			 */
-			channel: number
-			/**
-			 * @description Optional description of the destination port
-			 * @example Main audio output
-			 */
-			description?: string
-			/** Format: uuid */
-			destinationId: string
-			/**
-			 * Format: date-time
-			 * @description The date and time when the destination port was created
-			 * @example 2023-01-01T12:00:00Z
-			 */
-			createdAt: string
-			/**
-			 * Format: date-time
-			 * @description The date and time when the destination port was last updated
-			 * @example 2023-01-01T12:00:00Z
-			 */
-			updatedAt: string
-		}
-	}
-	responses: never
-	parameters: never
-	requestBodies: never
-	headers: never
-	pathItems: never
+    schemas: {
+        /**
+         * Format: uuid
+         * @description A UUIDv4 identifier for an event
+         * @example 83824df7-2831-4ed9-a711-ea1a4bfb4f38
+         */
+        EventId: string;
+        /**
+         * @description A transmission event title
+         * @example Eurovision 2049
+         */
+        EventTitle: string;
+        /**
+         * Format: uuid
+         * @description A UUIDv4 identifier for a source
+         * @example b57e9f3d-8f7c-4c3a-9f0e-12d8a5e7b9c2
+         */
+        SourceId: string;
+        /**
+         * @description A label for a source
+         * @example Main Camera
+         */
+        SourceLabel: string;
+        /**
+         * Format: uuid
+         * @description A UUIDv4 identifier for a destination
+         * @example d8f7c4c3-a9f0-e12d-8a5e-7b9c2b57e9f3
+         */
+        DestinationId: string;
+        /**
+         * @description A label for a destination
+         * @example Output Stream 1
+         */
+        DestinationLabel: string;
+        EventResponse: {
+            id: components["schemas"]["EventId"];
+            title: components["schemas"]["EventTitle"];
+            /**
+             * Format: date-time
+             * @description The date and time when the event was created
+             * @example 2023-01-01T12:00:00Z
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @description The date and time when the event was last updated
+             * @example 2023-01-01T12:00:00Z
+             */
+            updatedAt: string;
+            sources?: {
+                id: components["schemas"]["SourceId"];
+                label: components["schemas"]["SourceLabel"];
+            }[];
+            destinations?: {
+                id: components["schemas"]["DestinationId"];
+                label: components["schemas"]["DestinationLabel"];
+            }[];
+            partylines?: {
+                /**
+                 * Format: uuid
+                 * @description A UUIDv4 identifier for a partyline
+                 * @example 83824df7-2831-4ed9-a711-ea1a4bfb4f38
+                 */
+                id: string;
+                /**
+                 * @description A communication partyline title
+                 * @example Main Communication Channel
+                 */
+                title: string;
+            }[];
+        };
+        ErrorResponse: {
+            /** @example Validation failed */
+            message: string;
+            /** @example {
+             *       "fieldName": [
+             *         "Error message 1",
+             *         "Error message 2"
+             *       ]
+             *     } */
+            errors?: {
+                [key: string]: string[];
+            };
+        };
+        NotFoundResponse: {
+            /** @example Resource not found */
+            message: string;
+        };
+        EventListResponse: components["schemas"]["EventResponse"][];
+        SourceResponse: {
+            id: components["schemas"]["SourceId"];
+            label: components["schemas"]["SourceLabel"];
+            eventId: components["schemas"]["EventId"];
+            /**
+             * Format: date-time
+             * @description The date and time when the source was created
+             * @example 2023-01-01T12:00:00Z
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @description The date and time when the source was last updated
+             * @example 2023-01-01T12:00:00Z
+             */
+            updatedAt: string;
+        };
+        DestinationResponse: {
+            id: components["schemas"]["DestinationId"];
+            label: components["schemas"]["DestinationLabel"];
+            eventId: components["schemas"]["EventId"];
+            /**
+             * Format: date-time
+             * @description The date and time when the destination was created
+             * @example 2023-01-01T12:00:00Z
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @description The date and time when the destination was last updated
+             * @example 2023-01-01T12:00:00Z
+             */
+            updatedAt: string;
+        };
+        PartylineResponse: {
+            /**
+             * Format: uuid
+             * @description A UUIDv4 identifier for a partyline
+             * @example 83824df7-2831-4ed9-a711-ea1a4bfb4f38
+             */
+            id: string;
+            /**
+             * @description A communication partyline title
+             * @example Main Communication Channel
+             */
+            title: string;
+            /** Format: uuid */
+            eventId: string;
+            /**
+             * Format: date-time
+             * @description The date and time when the partyline was created
+             * @example 2023-01-01T12:00:00Z
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @description The date and time when the partyline was last updated
+             * @example 2023-01-01T12:00:00Z
+             */
+            updatedAt: string;
+        };
+        SourcePortResponse: {
+            /**
+             * Format: uuid
+             * @description A UUIDv4 identifier for a source port
+             * @example 83824df7-2831-4ed9-a711-ea1a4bfb4f38
+             */
+            id: string;
+            /**
+             * @description The type of the source port (e.g., video, audio)
+             * @example audio
+             */
+            type: string;
+            /**
+             * @description The channel number of the source port
+             * @example 1
+             */
+            channel: number;
+            /**
+             * @description Optional description of the source port
+             * @example Main audio feed
+             */
+            description?: string;
+            /** Format: uuid */
+            sourceId: string;
+            /**
+             * Format: date-time
+             * @description The date and time when the source port was created
+             * @example 2023-01-01T12:00:00Z
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @description The date and time when the source port was last updated
+             * @example 2023-01-01T12:00:00Z
+             */
+            updatedAt: string;
+        };
+        SourcePortListResponse: components["schemas"]["SourcePortResponse"][];
+        DestinationPortResponse: {
+            /**
+             * Format: uuid
+             * @description A UUIDv4 identifier for a destination port
+             * @example 83824df7-2831-4ed9-a711-ea1a4bfb4f38
+             */
+            id: string;
+            /**
+             * @description The type of the destination port (e.g., video, audio)
+             * @example audio
+             */
+            type: string;
+            /**
+             * @description The channel number of the destination port
+             * @example 1
+             */
+            channel: number;
+            /**
+             * @description Optional description of the destination port
+             * @example Main audio output
+             */
+            description?: string;
+            /** Format: uuid */
+            destinationId: string;
+            /**
+             * Format: date-time
+             * @description The date and time when the destination port was created
+             * @example 2023-01-01T12:00:00Z
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @description The date and time when the destination port was last updated
+             * @example 2023-01-01T12:00:00Z
+             */
+            updatedAt: string;
+        };
+        DestinationPortListResponse: components["schemas"]["DestinationPortResponse"][];
+        FlowEdgeResponse: {
+            /**
+             * Format: uuid
+             * @description A UUIDv4 identifier for a flow edge
+             * @example 83824df7-2831-4ed9-a711-ea1a4bfb4f38
+             */
+            id: string;
+            /** Format: uuid */
+            sourcePortId: string;
+            /** Format: uuid */
+            destinationPortId: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+    };
+    responses: never;
+    parameters: never;
+    requestBodies: never;
+    headers: never;
+    pathItems: never;
 }
-export type $defs = Record<string, never>
-export type operations = Record<string, never>
+export type $defs = Record<string, never>;
+export type operations = Record<string, never>;
